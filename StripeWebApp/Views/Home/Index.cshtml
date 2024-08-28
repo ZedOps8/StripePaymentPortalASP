@@ -1,0 +1,35 @@
+﻿@model IEnumerable<StripeWebApp.Models.Item>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="~/css/style.css"> <!-- Link to the stylesheet for styling the page -->
+    <script src="https://js.stripe.com/v3/"></script> <!-- Include Stripe.js for handling payment interactions -->
+</head>
+<body>
+    <section>
+        <!-- Loop through each item in the model and display it -->
+        @foreach (var item in Model)
+        {
+                <div class="product">
+                    <!-- Display the product image -->
+                    <img src="@item.ImageUrl" alt="@item.Name" />
+                    <div class="description">
+                        <!-- Display the product name -->
+                        <h3>@item.Name</h3>
+                        <!-- Display the product price formatted as currency -->
+                        <h5>@item.Price.ToString("C")</h5>
+                        <!-- Form to handle the checkout process -->
+                        <form asp-action="CreateCheckout" method="POST">
+                            <!-- Hidden input to pass the priceId to the CreateCheckout action -->
+                            <input type="hidden" name="priceId" value="@item.PriceId" />
+                            <!-- Button to submit the form and initiate the checkout -->
+                            <button type="submit">Checkout</button>
+                        </form>
+                    </div>
+                </div>
+        }
+    </section>
+</body>
+</html>
